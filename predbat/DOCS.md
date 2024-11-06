@@ -74,7 +74,7 @@ As mentioned the only issue I have is that with the template apps.yaml the logs 
 Each image will run as a standalone Docker container using the following command
 
 ```
-Docker run -d –-name predbat -v /etc/localtime:/etc/localtime nipar44/predbat_addon:tag – See below for tag descriptions
+Docker run -d –-name predbat -v /etc/localtime:/etc/localtime -p 5052:5052 nipar44/predbat_addon:tag – See below for tag descriptions
 ```
 
 The container logs will error until the apps.yaml template is completed, this can either be modified directly in the container or overwritten by copying an updated version to the container /config directory using ‘docker cp’
@@ -93,6 +93,8 @@ services:
       container_name: predbat
       image: nipar44/predbat_addon:latest
       restart: unless-stopped
+      ports:
+        - "5052/5052"
       volumes:
         - /etc/localtime:/etc/localtime:ro
 ```
@@ -109,6 +111,8 @@ services:
       container_name: predbat
       image: nipar44/predbat_addon:latest
       restart: unless-stopped
+      ports:
+        - "5052/5052"
       volumes:
         - ./config:/config:rw 
         - /etc/localtime:/etc/localtime:ro
